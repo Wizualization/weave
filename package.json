@@ -1,0 +1,23 @@
+{
+  "name": "weave",
+  "version": "1.0.0",
+  "description": "A server connecting optomancy mages and arcane foci.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wizualization/weave.git"
+  },
+  "author": "Andrea Batch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wizualization/weave/issues"
+  },
+  "homepage": "https://github.com/Wizualization/weave#readme",
+  "dependencies": {
+    "http": "^0.0.1-security",
+    "websocket": "^1.0.34"
+  }
+}
