@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/Wizualization/weave#readme",
   "dependencies": {
+    "@types/socket.io": "^3.0.2",
+    "@types/socket.io-client": "^3.0.0",
     "http": "^0.0.1-security",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "websocket": "^1.0.34"
   }
 }

@@ -24,4 +24,21 @@ wsServer.on('request', function(request) {
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
   console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients))
+
+  //var connection = request.accept('echo-protocol', request.origin);
+  connection.on('message', function(message) {
+      if (message.type === 'utf8') {
+          console.log('Received Message: ' + message.utf8Data);
+          connection.sendUTF(message.utf8Data);
+      }
+      else if (message.type === 'binary') {
+          console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
+          connection.sendBytes(message.binaryData);
+      }
+  });
+  connection.on('close', function(reasonCode, description) {
+      console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+  });
+
 });
+
