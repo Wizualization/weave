@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-function ioConnection(socket) {
+import chalk from "chalk";
+import { io } from "../";
+import { printMsg } from "../utils";
+
+function ioConnection(socket: any): void {
   socket.emit("IO_CONNECTED");
   const { id } = socket;
   const idString = `${id} (${socket.handshake.address})`;
@@ -13,15 +17,23 @@ function ioConnection(socket) {
 
   socket.join(room);
 
-  const roomMsg =  `New ${clientString} connected to room ${room}: ${idString}`
+  const roomMsg = chalk.grey(
+    `New ${clientString} connected to room ${room}: ${idString}`
+  );
+  printMsg(`${chalk.green.bold("> ")}${roomMsg}`);
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected: " + idString)
+    printMsg(
+      `${chalk.red.bold("< ")}${chalk.grey(
+        "Client disconnected: "
+      )}${chalk.grey(idString)}`
+    );
   });
 
-  socket.on("hello-room", (arg) => {
+  socket.on("hello-room", (arg: any) => {
     console.log(arg);
     io.to(room).emit("yes-room", "Yes room, I can hear you");
   });
 }
 
+export default ioConnection;

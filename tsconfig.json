@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": "./src/",
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "suppressImplicitAnyIndexErrors": true,
+  }
+}

@@ -1,32 +1,43 @@
 {
-  "name": "weave",
+  "name": "kibblexr-server",
   "version": "1.0.0",
-  "description": "A server connecting optomancy mages and arcane foci.",
+  "description": "Data synchronization server for kibblxr ",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "serve -s build"
+    "build": "tsc -p ./",
+    "dev": "ts-node-dev --respawn ./src/index.ts -d",
+    "start": "node ./build/index.js -p 3454"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Wizualization/weave.git"
+    "url": "git+https://github.com/DreaJulca/kibblexr-server.git"
   },
   "author": "Andrea Batch",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Wizualization/weave/issues"
+    "url": "https://github.com/DreaJulca/kibblexr-server/issues"
   },
-  "homepage": "https://github.com/Wizualization/weave#readme",
+  "homepage": "https://github.com/DreaJulca/kibblexr-server#readme",
   "dependencies": {
-    "@types/socket.io": "^3.0.2",
-    "@types/socket.io-client": "^3.0.0",
-    "express": "^4.17.2",
-    "fs": "^0.0.1-security",
-    "http": "^0.0.1-security",
-    "https": "^1.0.0",
-    "socket.io": "^4.4.1",
-    "socket.io-client": "^4.4.1",
-    "websocket": "^1.0.34",
-    "ws": "^8.4.2"
+    "chalk": "^4.1.2",
+    "commander": "^6.2.1",
+    "express": "^4.17.1",
+    "socket.io": "^3.0.5",
+    "tedis": "^0.1.12"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/express": "^4.17.10",
+    "@types/node": "^14.14.20",
+    "@types/socket.io": "^2.1.12",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3"
   }
 }
