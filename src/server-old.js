@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var PORT = 8443;
+var PORT = 8440;
 var HOSTNAME = "0.0.0.0";
 
 const http = require("http");

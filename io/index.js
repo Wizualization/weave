@@ -1,1 +1,0 @@
-const ioConnection = require('./ioConnection');
