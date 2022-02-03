@@ -1,85 +1,24 @@
 #!/usr/bin/env node
+"use strict";
 var PORT = 8440;
 var HOSTNAME = "0.0.0.0";
-
-const http = require("http");
-const express = require("express");
-const ioConnection = require("./io/ioConnection");
-
-// Express setup
-const app = express();
-const server = http.createServer(app);
-
-// Socket.io setup
-// require() is necessary in socketio 3.x... :(
-// Exported to be reused easily in other modules
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const io = require("socket.io")(server, {
-  // Fixes "WebSocket is already in CLOSING or CLOSED state" issue in Chrome
-  // https://github.com/socketio/socket.io/issues/3259
-  pingTimeout: 60000,
-  // CORS is disabled by default in socket.io 3.x... :(
-  // TODO: Work out what logic to put here for dev/prod
-  cors: {
-    origin: [
-      `https://localhost:3001`,
-      `http://localhost:3001`,
-      `https://kibblxr.io`,
-      /\.simbroadcasts\.tv$/,
-    ],
-  },
-});
-
-// New client connection - Socket IO communications to clients
-io.on("connection", ioConnection);
-
-// Server listen
-server.listen(PORT, () => {
-  console.log('listening on port '+PORT.toString());
-});
-
-/*
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-
-const httpServer = createServer();
-const io = new Server(httpServer, {   
-  // options
-});
-
-io.on("connection", (socket) => {
-  console.log("A client connected")
-});
-
-httpServer.listen(PORT, () => {
-  console.log('listening on port '+PORT.toString());
-});
-*/
-
-/*
 const fs = require('fs');
 const https = require('https');
-const WebSocket = require('ws');
-
+const websock = require('ws');
 const server = new https.createServer({
-  cert: fs.readFileSync('sslcert/cert.pem'),   
-  key: fs.readFileSync('sslcert/key.pem')
+    cert: fs.readFileSync('C:/Certbot/live/optomancy.com/fullchain.pem'),
+    key: fs.readFileSync('C:/Certbot/live/optomancy.com/privkey.pem')
 });
-
-const wss = new WebSocket.Server({ server });  // !
-
+const wss = new websock.Server({ server }); // !
 wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    console.log('MSG received: %s', message);
-  });
-
-  ws.send('Hi to client');
+    ws.on('message', function incoming(message) {
+        console.log('MSG received: %s', message);
+    });
+    ws.send('Hi to client');
 });
-
-
-server.listen(PORT);
-*/
-
+server.listen(PORT, function () {
+    console.log((new Date()) + ' Server is listening on port ' + PORT.toString());
+});
 /*
 var WebSocketServer = require('websocket').server;
 var http = require('http');
@@ -132,4 +71,4 @@ wsServer.on('request', function(request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
-*/
+*/ 
