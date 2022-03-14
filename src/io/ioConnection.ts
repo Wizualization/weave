@@ -2,7 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as chalk from "chalk";
+function guidGenerator() {
+  var S4 = function() {
+     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  };
+  return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
 
+let grimoire:any = {'spells':{}};
+grimoire.spells = {};
 function ioConnection(socket: any): void {
   socket.emit("IO_CONNECTED");
   const { id } = socket;
@@ -30,7 +38,9 @@ function ioConnection(socket: any): void {
 
   socket.on('spellcast', (msg: any) => {    
       console.log('spell: ' + chalk.blue(msg)); 
-      socket.to(room).emit("SPELL_UPDATE", msg);
+      grimoire.spells[guidGenerator()] = (JSON.parse(msg));
+      console.log(grimoire)
+      socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire));
     
       //ssocket.io.emit("spell", "alakazam");
     });
