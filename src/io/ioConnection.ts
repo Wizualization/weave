@@ -28,9 +28,16 @@ function ioConnection(socket: any): void {
     );
   });
 
+  socket.on('spellcast', (msg: any) => {    
+      console.log('spell: ' + chalk.blue(msg)); 
+      socket.to(room).emit("SPELL_UPDATE", msg);
+    
+      //ssocket.io.emit("spell", "alakazam");
+    });
+
   socket.on("hello-room", (arg: any) => {
     console.log(arg);
-    //io.to(room).emit("yes-room", "Yes room, I can hear you");
+    socket.to(room).emit("yes-room", "Yes room, I can hear you");
   });
 }
 
