@@ -25,7 +25,7 @@ let io = require('socket.io')(http, {
 app.use(express.static('./.well-known')); //Serves resources from public folder
 app.use('/.well-known', express.static(__dirname + '/.well-known'));
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve("./client/index.html"));
+    res.sendFile(path.resolve("./src/landing.html"));
 });
 app.get("/test", (req, res) => {
     res.sendFile("./landing.html", { root: 'src' });

@@ -28,7 +28,7 @@ app.use(express.static('./.well-known')); //Serves resources from public folder
 app.use('/.well-known', express.static(__dirname + '/.well-known'))
 
 app.get("/", (req: any, res: any) => {
-  res.sendFile(path.resolve("./client/index.html"));
+  res.sendFile(path.resolve("./src/landing.html"));
 });
 
 app.get("/test", (req: any, res: any) => {
