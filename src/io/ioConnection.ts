@@ -10,13 +10,17 @@ function guidGenerator() {
 }
 
 let grimoire:any = {'spells':{}};
-grimoire.spells = {};
+//do it on a room basis for now
+grimoire.rooms = {};
 function ioConnection(socket: any): void {
   socket.emit("IO_CONNECTED");
   const { id } = socket;
   const idString = `${id} (${socket.handshake.address})`;
   const { room, client } = socket.handshake.query;
-
+  if(typeof grimoire.rooms[room] == 'undefined'){
+    grimoire.rooms[room] = {};
+    grimoire.rooms[room].spells = {};
+  }
   // If client isn't specified, assume it's a headset
   const clientType = client !== "vscode" ? "headset" : "vscode";
   const clientString = chalk.green(clientType.toUpperCase());
@@ -38,12 +42,23 @@ function ioConnection(socket: any): void {
 
   socket.on('spellcast', (msg: any) => {    
       console.log('spell: ' + chalk.blue(msg)); 
-      grimoire.spells[guidGenerator()] = (JSON.parse(msg));
+      grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
       console.log(grimoire)
-      socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire));
+      socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire.rooms[room]));
     
-      //ssocket.io.emit("spell", "alakazam");
+      //socket.io.emit("spell", "alakazam");
     });
+
+  socket.on('spellmatched', (msg: any) => {
+    let matched_spell = JSON.parse(msg);
+    console.log('spell identified: ' + chalk.blue(msg)); 
+    //grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
+    console.log(grimoire)
+    socket.to(room).emit("SPELL_MATCHED", JSON.stringify(grimoire.rooms[room]));
+  
+    //socket.io.emit("spell", "alakazam");
+  });
+
 
   socket.on("hello-room", (arg: any) => {
     console.log(arg);

@@ -10,12 +10,17 @@ function guidGenerator() {
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
 let grimoire = { 'spells': {} };
-grimoire.spells = {};
+//do it on a room basis for now
+grimoire.rooms = {};
 function ioConnection(socket) {
     socket.emit("IO_CONNECTED");
     const { id } = socket;
     const idString = `${id} (${socket.handshake.address})`;
     const { room, client } = socket.handshake.query;
+    if (typeof grimoire.rooms[room] == 'undefined') {
+        grimoire.rooms[room] = {};
+        grimoire.rooms[room].spells = {};
+    }
     // If client isn't specified, assume it's a headset
     const clientType = client !== "vscode" ? "headset" : "vscode";
     const clientString = chalk.green(clientType.toUpperCase());
@@ -27,10 +32,10 @@ function ioConnection(socket) {
     });
     socket.on('spellcast', (msg) => {
         console.log('spell: ' + chalk.blue(msg));
-        grimoire.spells[guidGenerator()] = (JSON.parse(msg));
+        grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
         console.log(grimoire);
-        socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire));
-        //ssocket.io.emit("spell", "alakazam");
+        socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire.rooms[room]));
+        //socket.io.emit("spell", "alakazam");
     });
     socket.on("hello-room", (arg) => {
         console.log(arg);
