@@ -45,18 +45,12 @@ function ioConnection(socket: any): void {
       grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
       console.log(grimoire)
       socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire.rooms[room]));
-    
-      //socket.io.emit("spell", "alakazam");
     });
 
   socket.on('spellmatched', (msg: any) => {
     let matched_spell = JSON.parse(msg);
     console.log('spell identified: ' + chalk.blue(msg)); 
-    //grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
-    console.log(grimoire)
-    socket.to(room).emit("SPELL_MATCHED", JSON.stringify(grimoire.rooms[room]));
-  
-    //socket.io.emit("spell", "alakazam");
+    socket.to(room).emit("SPELL_MATCHED", matched_spell);
   });
 
 
