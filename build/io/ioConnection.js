@@ -9,6 +9,15 @@ function guidGenerator() {
     };
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
+let storedPrimitives = {
+    "a07ff089-2ca2-1341-cc58-74509f1d8577": "line",
+    "4f871493-ebf4-80b5-fc2b-b387d4e73a0d": "line",
+    "1f1459f2-688e-5d2a-2366-5cb00328eb2c": "point",
+    "9f7c9acd-c9e0-5051-71d5-889f13f8b145": "point",
+    "9458d9af-68e1-e137-d7c8-546055a92cdd": "bar",
+    "75e76e72-acb2-350c-3a95-a86ab5255c66": "column",
+    "d4fbd561-d1f4-4192-7546-242ffb03dd59": "column"
+};
 let grimoire = { 'spells': {} };
 //do it on a room basis for now
 grimoire.rooms = {};
@@ -39,7 +48,7 @@ function ioConnection(socket) {
     socket.on('spellmatched', (msg) => {
         let matched_spell = JSON.parse(msg);
         console.log('spell identified: ' + chalk.blue(msg));
-        socket.to(room).emit("SPELL_MATCHED", matched_spell);
+        socket.to(room).emit("SPELL_MATCHED", { "key": matched_spell, "optoClass": storedPrimitives[matched_spell] });
     });
     socket.on("hello-room", (arg) => {
         console.log(arg);
