@@ -17,7 +17,11 @@ let storedPrimitives = {
   "9f7c9acd-c9e0-5051-71d5-889f13f8b145": "point",
   "9458d9af-68e1-e137-d7c8-546055a92cdd": "bar",
   "75e76e72-acb2-350c-3a95-a86ab5255c66": "column",
-  "d4fbd561-d1f4-4192-7546-242ffb03dd59": "column"
+  "d4fbd561-d1f4-4192-7546-242ffb03dd59": "column",
+  "2818b295-2a1a-c14e-1259-da58eb3fe09e": "color",
+  "82c46dfd-d3fe-6489-13cb-f32c1581ecc0": "color",
+  "f15012d8-a09f-c3b7-90a7-66f796e29fa6": "axis",
+  "e603c17a-18cd-3ad0-1504-f1ae4ab54dce": "axis"
 }
 
 
