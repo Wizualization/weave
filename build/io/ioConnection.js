@@ -53,6 +53,7 @@ function ioConnection(socket) {
         let matched_spell = JSON.parse(msg);
         console.log('spell identified: ' + chalk.blue(msg));
         socket.to(room).emit("SPELL_MATCHED", { "key": matched_spell, "optoClass": storedPrimitives[matched_spell] });
+        socket.emit("SPELL_MATCHED", { "key": matched_spell, "optoClass": storedPrimitives[matched_spell] });
     });
     socket.on("hello-room", (arg) => {
         console.log(arg);
