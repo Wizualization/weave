@@ -44,8 +44,10 @@ function ioConnection(socket: any): void {
   if(typeof grimoire.room_trace[room] == 'undefined'){
     grimoire.room_trace[room] = [];
   } else {
-    socket.to(room).emit("SPELL_MATCHED", grimoire.room_trace[room]);
-    socket.emit("SPELL_MATCHED", grimoire.room_trace[room]);
+    grimoire.room_trace[room].map((spelltrace: any) => {
+      socket.to(room).emit("SPELL_MATCHED", spelltrace);
+      socket.emit("SPELL_MATCHED", spelltrace);
+    })
   }
   socket.emit("IO_CONNECTED");
   // If client isn't specified, assume it's a headset
