@@ -28,6 +28,10 @@ let storedPrimitives = {
 let grimoire:any = {'spells':{}};
 //do it on a room basis for now
 grimoire.rooms = {};
+
+//we also want to keep a record of spells cast in the room
+grimoire.room_trace = {};
+
 function ioConnection(socket: any): void {
   socket.emit("IO_CONNECTED");
   const { id } = socket;
@@ -37,6 +41,13 @@ function ioConnection(socket: any): void {
     grimoire.rooms[room] = {};
     grimoire.rooms[room].spells = {};
   }
+  if(typeof grimoire.room_trace[room] == 'undefined'){
+    grimoire.room_trace[room] = [];
+  } else {
+    socket.to(room).emit("SPELL_MATCHED", grimoire.room_trace[room]);
+    socket.emit("SPELL_MATCHED", grimoire.room_trace[room]);
+  }
+  socket.emit("IO_CONNECTED");
   // If client isn't specified, assume it's a headset
   const clientType = client !== "vscode" ? "headset" : "vscode";
   const clientString = chalk.green(clientType.toUpperCase());
@@ -66,8 +77,9 @@ function ioConnection(socket: any): void {
   socket.on('spellmatched', (msg: any) => {
     let matched_spell = JSON.parse(msg);
     console.log('spell identified: ' + chalk.blue(msg)); 
-    socket.to(room).emit("SPELL_MATCHED", {"key": matched_spell, "optoClass": storedPrimitives[matched_spell]});
-    socket.emit("SPELL_MATCHED", {"key": matched_spell, "optoClass": storedPrimitives[matched_spell]});
+    grimoire.room_trace[room].push({"key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell], "workspace": matched_spell['workspace']});
+    socket.to(room).emit("SPELL_MATCHED", {"key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell], "workspace": matched_spell['workspace']});
+    socket.emit("SPELL_MATCHED", {"key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell], "workspace": matched_spell['workspace']});
   });
 
 
