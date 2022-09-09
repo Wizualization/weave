@@ -64,9 +64,9 @@ function ioConnection(socket) {
     socket.on('spellmatched', (msg) => {
         let matched_spell = JSON.parse(msg);
         console.log('spell identified: ' + chalk.blue(msg));
-        grimoire.room_trace[room].push({ "key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell], "workspace": matched_spell['workspace'] });
-        socket.to(room).emit("SPELL_MATCHED", { "key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell], "workspace": matched_spell['workspace'] });
-        socket.emit("SPELL_MATCHED", { "key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell], "workspace": matched_spell['workspace'] });
+        grimoire.room_trace[room].push({ "key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell['key']], "workspace": matched_spell['workspace'] });
+        socket.to(room).emit("SPELL_MATCHED", { "key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell['key']], "workspace": matched_spell['workspace'] });
+        socket.emit("SPELL_MATCHED", { "key": matched_spell['key'], "optoClass": storedPrimitives[matched_spell['key']], "workspace": matched_spell['workspace'] });
     });
     socket.on("hello-room", (arg) => {
         console.log(arg);
