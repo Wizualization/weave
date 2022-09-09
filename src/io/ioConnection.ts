@@ -21,7 +21,9 @@ let storedPrimitives = {
   "2818b295-2a1a-c14e-1259-da58eb3fe09e": "color",
   "82c46dfd-d3fe-6489-13cb-f32c1581ecc0": "color",
   "f15012d8-a09f-c3b7-90a7-66f796e29fa6": "axis",
-  "e603c17a-18cd-3ad0-1504-f1ae4ab54dce": "axis"
+  "e603c17a-18cd-3ad0-1504-f1ae4ab54dce": "axis",
+  "7b2954fe-13ff-f24d-c029-811391c2e474": "view",
+  "89f3d62d-0813-7e3c-7002-9ba156fadb41": "view"
 }
 
 
