@@ -42,16 +42,16 @@ function ioConnection(socket) {
         grimoire.room_trace[room] = [];
     }
     else {
+        socket.join(socket.id);
         grimoire.room_trace[room].map((spelltrace) => {
-            socket.to(room).emit("SPELL_MATCHED", spelltrace);
             socket.emit("SPELL_MATCHED", spelltrace);
         });
     }
-    socket.emit("IO_CONNECTED");
     // If client isn't specified, assume it's a headset
     const clientType = client !== "vscode" ? "headset" : "vscode";
     const clientString = chalk.green(clientType.toUpperCase());
     socket.join(room);
+    socket.emit("IO_CONNECTED");
     const roomMsg = chalk.grey(`New ${clientString} connected to room ${room}: ${idString}`);
     console.log(`${chalk.green.bold("> ")}${roomMsg}`);
     socket.on("disconnect", () => {
