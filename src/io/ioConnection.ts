@@ -82,7 +82,9 @@ function ioConnection(socket: any): void {
 
   socket.on('uncast', (msg: any) => {    
     console.log('spell uncast index: ' + chalk.blue(msg)); 
-    
+    let uncast_node = msg;
+    let uncast_idx = Number(uncast_node.replace('node_', ''));
+    grimoire.room_trace[room] = grimoire.room_trace[room].slice(0, uncast_idx);
     //grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
     socket.to(room).emit("SPELL_UNCAST", JSON.stringify({"uncast_index": msg}));
     socket.emit("SPELL_UNCAST", JSON.stringify({"uncast_index": msg}));
