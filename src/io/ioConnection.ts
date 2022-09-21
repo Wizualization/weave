@@ -85,6 +85,7 @@ function ioConnection(socket: any): void {
     
     //grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
     socket.to(room).emit("SPELL_UNCAST", JSON.stringify({"uncast_index": msg}));
+    socket.emit("SPELL_UNCAST", JSON.stringify({"uncast_index": msg}));
   });
 
 
