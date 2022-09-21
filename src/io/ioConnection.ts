@@ -80,6 +80,14 @@ function ioConnection(socket: any): void {
       socket.to(room).emit("SPELL_UPDATE", JSON.stringify(grimoire.rooms[room]));
     });
 
+  socket.on('uncast', (msg: any) => {    
+    console.log('spell uncast index: ' + chalk.blue(msg)); 
+    
+    //grimoire.rooms[room].spells[guidGenerator()] = (JSON.parse(msg));
+    socket.to(room).emit("SPELL_UNCAST", JSON.stringify({"uncast_index": msg}));
+  });
+
+
   socket.on('spellmatched', (msg: any) => {
     let matched_spell = JSON.parse(msg);
     console.log('spell identified: ' + chalk.blue(msg)); 
